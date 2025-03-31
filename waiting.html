@@ -22,17 +22,18 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    const roomCode = sessionStorage.getItem("roomCode");
-    const roomDisplay = document.getElementById("roomCode");
-    roomDisplay.innerText = roomCode;
+    document.addEventListener("DOMContentLoaded", () => {
+      const roomCode = sessionStorage.getItem("roomCode");
+      document.getElementById("roomCode").innerText = roomCode;
 
-    set(ref(db, `rooms/${roomCode}`), { player1: true });
+      set(ref(db, `rooms/${roomCode}`), { player1: true });
 
-    const player2Ref = ref(db, `rooms/${roomCode}/player2`);
-    onValue(player2Ref, (snapshot) => {
-      if (snapshot.exists()) {
-        window.location.href = "game.html";
-      }
+      const player2Ref = ref(db, `rooms/${roomCode}/player2`);
+      onValue(player2Ref, (snapshot) => {
+        if (snapshot.exists()) {
+          window.location.href = "game.html";
+        }
+      });
     });
   </script>
   <style>
