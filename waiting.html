@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>انتظار اللاعب الثاني</title>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAvC4bfYWCopbv6cPSmxN8uQtm6ItGom3s",
+      authDomain: "t5a6r-2c1bf.firebaseapp.com",
+      databaseURL: "https://t5a6r-2c1bf-default-rtdb.firebaseio.com",
+      projectId: "t5a6r-2c1bf",
+      storageBucket: "t5a6r-2c1bf.firebasestorage.app",
+      messagingSenderId: "137336036100",
+      appId: "1:137336036100:web:962e1a1df1986def124e51"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const roomCode = sessionStorage.getItem("roomCode");
+    const roomDisplay = document.getElementById("roomCode");
+    roomDisplay.innerText = roomCode;
+
+    set(ref(db, `rooms/${roomCode}`), { player1: true });
+
+    const player2Ref = ref(db, `rooms/${roomCode}/player2`);
+    onValue(player2Ref, (snapshot) => {
+      if (snapshot.exists()) {
+        window.location.href = "game.html";
+      }
+    });
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(135deg, #512da8, #311b92);
+      color: white;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      font-size: 28px;
+    }
+    .code-box {
+      font-size: 36px;
+      background: rgba(255,255,255,0.2);
+      padding: 15px 30px;
+      border-radius: 12px;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>✅ تم إنشاء الغرفة</h1>
+  <p>شارك الكود مع شريكك</p>
+  <div class="code-box" id="roomCode">----</div>
+  <p>بانتظار دخول اللاعب الثاني...</p>
+</body>
+</html>

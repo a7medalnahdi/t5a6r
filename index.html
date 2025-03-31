@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لعبة التخاطر</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(135deg, #7b1fa2, #512da8);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+    .btn {
+      background-color: #ff4081;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 12px;
+      font-size: 18px;
+      margin: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      background-color: #e91e63;
+    }
+    input {
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      width: 200px;
+      margin-top: 10px;
+      text-align: center;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>💭 لعبة التخاطر</h1>
+  <p>اختبر مدى التوافق بينك وبين شريكك 🤝</p>
+
+  <button class="btn" onclick="createRoom()">إنشاء غرفة</button>
+
+  <div>
+    <input type="text" id="roomInput" placeholder="ادخل كود الغرفة" />
+    <br>
+    <button class="btn" onclick="joinRoom()">انضمام إلى غرفة</button>
+  </div>
+
+  <script>
+    function createRoom() {
+      const code = Math.floor(1000 + Math.random() * 9000).toString();
+      sessionStorage.setItem("roomCode", code);
+      sessionStorage.setItem("player", "player1");
+      window.location.href = "waiting.html";
+    }
+
+    function joinRoom() {
+      const code = document.getElementById("roomInput").value;
+      if (code.length === 4) {
+        sessionStorage.setItem("roomCode", code);
+        sessionStorage.setItem("player", "player2");
+        window.location.href = "game.html";
+      } else {
+        alert("يرجى إدخال كود مكون من 4 أرقام.");
+      }
+    }
+  </script>
+</body>
+</html>

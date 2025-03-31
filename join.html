@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>الانضمام للغرفة</title>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAvC4bfYWCopbv6cPSmxN8uQtm6ItGom3s",
+      authDomain: "t5a6r-2c1bf.firebaseapp.com",
+      databaseURL: "https://t5a6r-2c1bf-default-rtdb.firebaseio.com",
+      projectId: "t5a6r-2c1bf",
+      storageBucket: "t5a6r-2c1bf.firebasestorage.app",
+      messagingSenderId: "137336036100",
+      appId: "1:137336036100:web:962e1a1df1986def124e51"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get("code");
+
+    if (code) {
+      sessionStorage.setItem("roomCode", code);
+      sessionStorage.setItem("player", "player2");
+      set(ref(db, `rooms/${code}/player2`), true).then(() => {
+        window.location.href = "game.html";
+      });
+    } else {
+      document.body.innerHTML = '<h2>خطأ: لا يوجد كود غرفة</h2>';
+    }
+  </script>
+</head>
+<body>
+  <p>جاري الانضمام للغرفة...</p>
+</body>
+</html>
